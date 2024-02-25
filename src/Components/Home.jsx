@@ -9,7 +9,7 @@ export default function Home() {
             <div className="left">
                 <h1 className='text-4xl font-bold my-4'>Design Your Comfort Zone</h1>
                 <p className='leading-relaxed opacity-50'> Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi sit non, consectetur pariatur iusto accusamus possimus qui nulla explicabo earum quaerat odit e</p>
-                <a href="/" target="_blank" rel="noopener noreferrer" className=' mt-8 rounded-md py-2 px-4 bg-orange-900 opacity-75 text-white inline-block'>SHOP NOW</a>
+                <Link to={'/products'} className=' mt-8 rounded-md py-2 px-4 bg-orange-900 opacity-75 text-white inline-block'>SHOP NOW</Link>
             </div>
             <div className="right image hidden md:block"><img className='rounded-lg shadow-lg' src="https://stylesatlife.com/wp-content/uploads/2019/12/latest-bed-designs-in-2020.jpg.webp" alt="" /></div>
         </section>

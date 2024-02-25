@@ -1,8 +1,16 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import { ShopContext } from './ShopContext'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 export default function ProductDesc() {
-  const [count, setCount] = useState(1)
+  const navigate = useNavigate()
+  const goToCart = () =>{
+    navigate('/cart', {state: {data,count}})
+  }
+  const location = useLocation()
+  let data = location.state
+  const {addToCart, reduceFromCart, cartItems } = useContext(ShopContext)
+  const [count, setCount] = useState(cartItems[data.id])
   const decrement = () =>{
     if(count === 1){
       setCount(1)
@@ -19,12 +27,6 @@ export default function ProductDesc() {
       setCount(count+1)
     }
   }
-  const navigate = useNavigate()
-  const goToCart = () =>{
-    navigate('/cart', {state: data})
-  }
-  const location = useLocation()
-  let data = location.state
   // console.log(location.state)
   return (
     <div className='flex flex-col  items-center'>
@@ -36,7 +38,7 @@ export default function ProductDesc() {
       <section className="flex gap-12 w-[100%]">
         <img src="https://www.course-api.com/images/store/product-12.jpeg" alt="" className="left h-[33rem] object-cover w-[50%] top-0" />
         <div className="data right w-[50%]">
-          <h2 className='text-[40px] font-semibold'>{data.name}</h2>
+          <h2 className='text-[40px] font-semibold' onClick={()=>{console.log(data)}}>{data.name}</h2>
           <p className='text-yellow-500 font-semibold mb-4'>⭐{data.reviews}</p>
           <p className='text-2xl font-bold text-orange-700 opacity-75'>{data.price}</p>
           <p className='leading-relaxed  opacity-75 my-5 text-justify'>{data.description}</p>
@@ -45,9 +47,13 @@ export default function ProductDesc() {
           <div className='flex'><p className='w-32 font-bold opacity-75'>Shipping : </p><span className='opacity-75'>{data.freeShip === 1 ?'Free' : 'Chargable'}</span></div>
           <hr className='my-10' />
           <div className='text-3xl font-bold   inline flex'>
-            <button onClick={decrement} className='border-2 py-2 w-10'>-</button><span className='border-2 py-2 px-3 border-x-0'>{count}</span><button onClick={increment} className='border-2 py-2 w-10'>+</button>
+            <button onClick={()=>{
+              if (cartItems[data.id]>0) {
+                reduceFromCart(data.id)
+              }
+            }} className='border-2 py-2 w-10'>-</button><span className='border-2 py-2 px-3 border-x-0'>{cartItems[data.id]}</span><button onClick={()=>{addToCart(data.id)}} className='border-2 py-2 w-10'>+</button>
           </div>
-          <button onClick={goToCart} className='block-inline my-5 py-2 px-5 bg-[#ab644c] rounded-lg shadow-md text-white' >Add to Cart</button>
+          <Link to={'/cart'} className='inline-block my-5 py-2 px-5 bg-[#ab644c] rounded-lg shadow-md text-white' >Go to Cart</Link>
 
         </div>
       </section>

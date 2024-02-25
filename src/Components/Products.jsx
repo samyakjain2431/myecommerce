@@ -4,13 +4,35 @@ import ProductGrid from './ProductGrid'
 import { Data } from './Data'
 import ProductList from './ProductList'
 
-// console.log(Data[3].category)
 export default function Product() {
-  const [currentData, setCurrentData] = useState(Data)
-  const [Category, setCategory] = useState('all')
-  const [Colors, setColors] = useState('all')
+  const myData = [...Data];
+  myData.sort((a, b)=> a.price-b.price)
+
+  const [category, setCategory] = useState('all')
+  const [color, setColor] = useState('all')
+  // const [first, setfirst] = useState(second)
   const [view, setView] = useState('list')
   const [width, setWidth] = useState(window.innerWidth)
+  const array = [
+    {
+      iid : 3,
+      name : 'samyak',
+      price : 12,
+    },
+    {
+      iid : 1,
+      name : 'aamyak',
+      price : 10,
+    },
+    {
+      iid : 2,
+      name : 'zamyak',
+      price : 11,
+    },
+
+  ]
+  const newArray = [...array].sort((name1, name2) =>name2.price.toString().localeCompare(name1.price.toString()))
+  // console.log(newArray)
 
 
 
@@ -24,8 +46,42 @@ export default function Product() {
   const changeToList = () =>{
     setView('list')
   }
+  const newElem =()=>{
+    // console.log("i'm here")
+    return(
+      <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque, eveniet illum accusamus ea quo ipsa? Incidunt illum id repellendus necessitatibus, ipsum vitae non iusto nostrum cum laudantium, sed ullam dolor cumque! Neque quis earum animi, at quaerat, minima ipsam dolorem numquam dicta molestiae reiciendis iste sunt consequatur, veniam inventore exercitationem?</p>
+    )
+  }
 
-
+  const changeSorting = (newSort)=>{
+    if(newSort === 'relevance'){
+      myData.sort((a, b)=>a.id-b.id
+      )
+      console.log('changing to relevance');
+    }
+    if(newSort === 'alphabetical'){
+      myData.sort((a, b)=>
+        a.name.localeCompare(b.name)
+        )
+        console.log('alphabetical', myData);
+    }
+    if(newSort === 'reverseAlpha'){
+      myData.sort((a, b)=>
+        b.name.localeCompare(a.name)
+        )
+        console.log('reverseAlpha', myData);
+    }
+    if(newSort === 'incPrice'){
+      myData.sort((a, b)=> a.price-b.price)
+      console.log('incPrice', myData);
+    }
+    if(newSort === 'decPrice'){
+      myData.sort((a, b)=>b.price-a.price)
+        console.log('decPrice', myData);
+    }
+    
+  }
+  
 
   useEffect(() => {
     const updateWindowDimensions = () => {
@@ -48,30 +104,30 @@ export default function Product() {
           <input type="text" placeholder='Search' className='border-2  rounded-md px-2 py-1 mb-3'/>
           <h2 className='text-lg font-semibold '>Category</h2>
           <ul className='ml-3 mb-3'>
-          <li className={Category === 'all'? 'cursor-pointer opacity-100 underline underline-offset-2' : 'cursor-pointer opacity-50'} onClick={()=>setCategory('all')}>All</li>
-          <li className={Category === 'office'? 'cursor-pointer opacity-100 underline underline-offset-2' : 'cursor-pointer opacity-50'} onClick={()=>setCategory('office')}>Office</li>
-          <li className={Category === 'living'? 'cursor-pointer opacity-100 underline underline-offset-2' : 'cursor-pointer opacity-50'} onClick={()=>setCategory('living')}>Living Room</li>
-          <li className={Category === 'kitchen'? 'cursor-pointer opacity-100 underline underline-offset-2' : 'cursor-pointer opacity-50'} onClick={()=>setCategory('kitchen')}>Kitchen</li>
-          <li className={Category === 'bedroom'? 'cursor-pointer opacity-100 underline underline-offset-2' : 'cursor-pointer opacity-50'} onClick={()=>setCategory('bedroom')}>Bedroom</li>
-          <li className={Category === 'dining'? 'cursor-pointer opacity-100 underline underline-offset-2' : 'cursor-pointer opacity-50'} onClick={()=>setCategory('dining')}>Dining</li>
-          <li className={Category === 'kids'? 'cursor-pointer opacity-100 underline underline-offset-2' : 'cursor-pointer opacity-50'} onClick={()=>setCategory('kids')}>Kids</li>
+          <li className={category === 'all'? 'cursor-pointer opacity-100 underline underline-offset-2' : 'cursor-pointer opacity-50'} onClick={()=>setCategory('all')}>All</li>
+          <li className={category === 'office'? 'cursor-pointer opacity-100 underline underline-offset-2' : 'cursor-pointer opacity-50'} onClick={()=>setCategory('office')}>Office</li>
+          <li className={category === 'living'? 'cursor-pointer opacity-100 underline underline-offset-2' : 'cursor-pointer opacity-50'} onClick={()=>setCategory('living')}>Living Room</li>
+          <li className={category === 'kitchen'? 'cursor-pointer opacity-100 underline underline-offset-2' : 'cursor-pointer opacity-50'} onClick={()=>setCategory('kitchen')}>Kitchen</li>
+          <li className={category === 'bedroom'? 'cursor-pointer opacity-100 underline underline-offset-2' : 'cursor-pointer opacity-50'} onClick={()=>setCategory('bedroom')}>Bedroom</li>
+          <li className={category === 'dining'? 'cursor-pointer opacity-100 underline underline-offset-2' : 'cursor-pointer opacity-50'} onClick={()=>setCategory('dining')}>Dining</li>
+          <li className={category === 'kids'? 'cursor-pointer opacity-100 underline underline-offset-2' : 'cursor-pointer opacity-50'} onClick={()=>setCategory('kids')}>Kids</li>
           </ul>
           <h2 className='text-lg font-semibold'>Company</h2>
           <select name="company" id="company" className='ml-3 mb-3 w-20'>
-            <option value="all">all</option>
-            <option value="all">all</option>
-            <option value="all">all</option>
-            <option value="all">all</option>
-            <option value="all">all</option>
+            <option value="all">All</option>
+            <option value="all">IKEA</option>
+            <option value="all">Havells</option>
+            <option value="all">Bajaj</option>
+            <option value="all">Godrej</option>
           </select>
           <h2 className='text-lg font-semibold'>Colors</h2>
           <ul className='mb-3 ml-3'>
-          <li className={Colors === 'all'? 'cursor-pointer text-black underline pl-1 font-semibold ' : 'cursor-pointer text-black opacity-50'} onClick={()=>setColors('all')}>All</li>
-          <li className={Colors === 'red'? 'cursor-pointer underline text-red-500 w-[50%] pl-1 font-semibold' : 'cursor-pointer text-red-600 opacity-50'} onClick={()=>setColors('red')}>Red</li>
-          <li className={Colors === 'green'? 'cursor-pointer underline text-green-500 w-[50%] pl-1 font-semibold ' : 'cursor-pointer text-green-600 opacity-50'} onClick={()=>setColors('green')}>Green</li>
-          <li className={Colors === 'yellow'? 'cursor-pointer underline text-yellow-500 w-[50%] pl-1  font-semibold ' : 'cursor-pointer text-yellow-600 opacity-50'} onClick={()=>setColors('yellow')}>Yellow</li>
-          <li className={Colors === 'blue'? 'cursor-pointer underline text-blue-500 w-[50%] pl-1  font-semibold ' : 'cursor-pointer text-blue-600 opacity-50'} onClick={()=>setColors('blue')}>Blue</li>
-          <li className={Colors === 'black'? 'cursor-pointer underline text-black w-[50%] pl-1  font-semibold ' : 'cursor-pointer text-black-600 opacity-50'} onClick={()=>setColors('black')}>Black</li>
+          <li className={color=== 'all'? 'cursor-pointer text-black underline pl-1 font-semibold ' : 'cursor-pointer text-black opacity-50'} onClick={()=>setColor('all')}>All</li>
+          <li className={color=== 'red'? 'cursor-pointer underline text-red-500 w-[50%] pl-1 font-semibold' : 'cursor-pointer text-red-600 opacity-50'} onClick={()=>setColor('red')}>Red</li>
+          <li className={color=== 'green'? 'cursor-pointer underline text-green-500 w-[50%] pl-1 font-semibold ' : 'cursor-pointer text-green-600 opacity-50'} onClick={()=>setColor('green')}>Green</li>
+          <li className={color=== 'yellow'? 'cursor-pointer underline text-yellow-500 w-[50%] pl-1  font-semibold ' : 'cursor-pointer text-yellow-600 opacity-50'} onClick={()=>setColor('yellow')}>Yellow</li>
+          <li className={color=== 'blue'? 'cursor-pointer underline text-blue-500 w-[50%] pl-1  font-semibold ' : 'cursor-pointer text-blue-600 opacity-50'} onClick={()=>setColor('blue')}>Blue</li>
+          <li className={color=== 'black'? 'cursor-pointer underline text-black w-[50%] pl-1  font-semibold ' : 'cursor-pointer text-black-600 opacity-50'} onClick={()=>setColor('black')}>Black</li>
           
           
           </ul>
@@ -82,33 +138,57 @@ export default function Product() {
         </div>
 
         <div className="right w-[100%]" >
-          <div className="sorting sticky top-0  bg-white py-8">
-            <button className={view === 'grid'? 'px-4 py-2 border-2 border-slate-700 underline text-sm  mr-4':'px-4 py-2 border-2 text-sm opacity-75 mr-4'} onClick={changeToGrid}>Grid</button>
-            <button className={view === 'list'? 'px-4 py-2 border-2 border-slate-700 underline text-sm  mr-4':'px-4 py-2 border-2 text-sm opacity-75 mr-4'}  onClick={changeToList}>List</button>
-            <span className='float-center bg-white z-2 '> Items found : {currentData.length}</span>
-            <select name="sorting" id="sorting" className='float-right border-2 rounded-md px-2 py-1'>
-              <option value="Highest To Lowest">A to Z</option>
-              <option value="Highest To Lowest">Z to A</option>
-              <option value="Highest To Lowest">Highest to Lowest</option>
-              <option value="Highest To Lowest">Lowest to Highest</option>
+          <div className="sorting sticky flex justify-between items-center top-0  bg-white py-8 ">
+            {/* <button className={view === 'grid'? 'px-4 py-2 border-2 border-slate-700 underline text-sm  mr-4':'px-4 py-2 border-2 text-sm opacity-75 mr-4'} onClick={changeToGrid}>Grid</button> */}
+            <div className="view">
+            <span className={view === 'grid'? 'material-symbols-outlined px-3 py-1 border-2 border-slate-700 mr-4':' material-symbols-outlined px-3 py-1  border-2  opacity-50 mr-4'} onClick={changeToGrid}>grid_view</span>
+            <span className={view === 'list'? 'material-symbols-outlined px-3 py-1 border-2 border-slate-700 mr-4':' material-symbols-outlined px-3 py-1  border-2  opacity-50 mr-4'} onClick={changeToList}>view_list</span>
+
+            </div>
+            {/* <button className={view === 'list'? 'px-4 py-2 border-2 border-slate-700 underline text-sm  mr-4':'px-4 py-2 border-2 text-sm opacity-75 mr-4'}  onClick={changeToList}>List</button> */}
+            <span className='float-center bg-white z-2 ' onClick={()=>changeSorting('incPrice')}> Items found : {Data.length}</span>
+            <select name="sorting" id="sorting" onChange={(e)=>changeSorting(e.target.value)}  className='float-right border-2 rounded-md px-2 py-1'>
+              <option value="relevance" >Relevance</option>
+              <option value="alphabetical" >A to Z</option>
+              <option value="reverseAlpha" >Z to A</option>
+              <option value="decPrice" >Highest to Lowest</option>
+              <option value="incPrice" >Lowest to Highest</option>
             </select>
           </div>
+          {/* <Cart/> */}
           {
             view ==='grid'? (<div className={width>1100? `product-listing grid grid-cols-3 `: width>750?`product-listing grid grid-cols-2 ` : `product-listing grid grid-cols-1 `}>
-            {currentData.map((elem)=>{
-              // console.log(elem)
-              return (
-                <ProductGrid key={elem.id} data={elem}  />
+            {category === 'all'? myData.map((elem)=>{
+              return(
+                <ProductGrid key ={elem.id} data = {elem}/>
               )
+            })
+            :
+            myData.map((elem)=>{
+              if(elem.category === category){
+                return (
+                  <ProductGrid key={elem.id} data={elem}  />
+                )
+
+              }
             })
           }
           </div>): (<div className='mr-5'>
-            {
-              currentData.map((elem)=>{
-                return(
-                  <ProductList key={elem.id} data={elem}/>
+            { category === 'all'? myData.map((elem)=>{
+              newElem()
+              return(
+                <ProductList key={elem.id} data={elem}/>
                 )
-              })
+            })
+            :
+            myData.map((elem)=>{
+              if(elem.category === category){
+                return (
+                  <ProductList key={elem.id} data={elem}/>
+                  )
+
+              }
+            })
             }
           </div>)
           }
